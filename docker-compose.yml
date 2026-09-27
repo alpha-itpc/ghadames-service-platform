@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  ghadames-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ghadames_service_app
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_ENV=production
+      - JWT_SECRET=ghadames_prod_secret_key_2026_change_me
+    volumes:
+      - ./server/uploads:/app/server/uploads
+      - ./server/ghadames_services.db:/app/server/ghadames_services.db

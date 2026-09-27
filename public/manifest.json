@@ -1,0 +1,24 @@
+{
+  "short_name": "منصة خدمتي",
+  "name": "منصة خدمتي - كل الخدمات في مكان واحد",
+  "description": "منصة الويب الاحترافية المتطورة للخدمات والشركات والأعمال المحلية في غدامس وكافة مدن ليبيا",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#F8FAFC",
+  "theme_color": "#FF6D00",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "rtl",
+  "lang": "ar"
+}
