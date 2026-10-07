@@ -3,6 +3,7 @@ services:
     name: ghadames-service-platform
     env: node
     plan: free
+    rootDir: .
     buildCommand: npm install && npm run build
     startCommand: node server/index.js
     envVars:
@@ -10,3 +11,4 @@ services:
         value: production
       - key: JWT_SECRET
         generateValue: true
+
