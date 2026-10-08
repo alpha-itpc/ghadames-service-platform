@@ -103,11 +103,15 @@ export default function ProviderDetailsPage({ type, id, onBack, onRequestClick }
         
         {/* Cover Image */}
         <div className="h-44 sm:h-64 bg-slate-900 relative">
-          <img
-            src={data.cover_url || 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80'}
-            alt={data.name}
-            className="w-full h-full object-cover opacity-80"
-          />
+          {data.cover_url ? (
+            <img
+              src={data.cover_url}
+              alt={data.name}
+              className="w-full h-full object-cover opacity-80"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 opacity-80"></div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/30 to-transparent"></div>
 
           {/* Action Tools */}
@@ -133,11 +137,17 @@ export default function ProviderDetailsPage({ type, id, onBack, onRequestClick }
           {/* Avatar & Ratings */}
           <div className="-mt-16 mb-4 flex flex-wrap items-end justify-between gap-4">
             <div className="relative">
-              <img
-                src={data.image || data.avatar_url || data.logo_url}
-                alt={data.name}
-                className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl object-cover border-4 border-white shadow-xl bg-white"
-              />
+              {data.image || data.avatar_url || data.logo_url ? (
+                <img
+                  src={data.image || data.avatar_url || data.logo_url}
+                  alt={data.name}
+                  className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl object-cover border-4 border-white shadow-xl bg-white"
+                />
+              ) : (
+                <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl border-4 border-white shadow-xl bg-slate-100 flex items-center justify-center">
+                  {data.type === 'company' ? <Building2 className="w-12 h-12 text-slate-300" /> : <User className="w-12 h-12 text-slate-300" />}
+                </div>
+              )}
               {data.is_verified === 1 && (
                 <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-1 shadow-md">
                   <CheckCircle2 className="w-6 h-6 text-emerald-500 fill-emerald-50" />

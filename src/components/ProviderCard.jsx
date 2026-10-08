@@ -18,11 +18,6 @@ export default function ProviderCard({ item, onClick, onRequestClick }) {
   const fav = isFavorite(item.type, item.id);
 
   const isCompany = item.type === 'company';
-  const defaultImage = isCompany
-    ? 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?w=400&q=80'
-    : 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80';
-
-  const defaultCover = 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80';
 
   const handleCall = (e) => {
     e.stopPropagation();
@@ -50,11 +45,15 @@ export default function ProviderCard({ item, onClick, onRequestClick }) {
       <div>
         {/* Cover & Badges Header */}
         <div className="relative h-28 sm:h-32 bg-slate-100 overflow-hidden">
-          <img
-            src={item.cover_url || defaultCover}
-            alt={item.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+          {item.cover_url ? (
+            <img
+              src={item.cover_url}
+              alt={item.name}
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 group-hover:scale-105 transition-transform duration-500"></div>
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
 
           {/* Favorite Button */}
@@ -85,11 +84,17 @@ export default function ProviderCard({ item, onClick, onRequestClick }) {
           {/* Avatar / Logo */}
           <div className="-mt-8 mb-2 flex justify-between items-end">
             <div className="relative">
-              <img
-                src={item.image || item.avatar_url || item.logo_url || defaultImage}
-                alt={item.name}
-                className="w-16 h-16 rounded-2xl object-cover border-4 border-white shadow-md bg-white"
-              />
+              {item.image || item.avatar_url || item.logo_url ? (
+                <img
+                  src={item.image || item.avatar_url || item.logo_url}
+                  alt={item.name}
+                  className="w-16 h-16 rounded-2xl object-cover border-4 border-white shadow-md bg-white"
+                />
+              ) : (
+                <div className="w-16 h-16 rounded-2xl border-4 border-white shadow-md bg-slate-100 flex items-center justify-center">
+                  {isCompany ? <Building2 className="w-8 h-8 text-slate-300" /> : <User className="w-8 h-8 text-slate-300" />}
+                </div>
+              )}
               {item.is_verified === 1 && (
                 <div className="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow">
                   <CheckCircle2 className="w-4 h-4 text-emerald-500 fill-emerald-50" />
