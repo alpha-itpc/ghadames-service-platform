@@ -479,14 +479,14 @@ app.post('/api/register-business', async (req, res) => {
         `INSERT INTO companies (
           user_id, company_name, category_id, city_id, area_id, phone, whatsapp, email, description, logo_url, address, is_approved, is_verified, verification_status
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 'pending')`,
-        [userId, company_name, category_id, city_id, area_id, phone, whatsapp || phone, email, description, logo_url || 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b7?w=400&q=80', address]
+        [userId, company_name, category_id, city_id, area_id, phone, whatsapp || phone, email, description, logo_url || null, address]
       );
     } else {
       await run(
         `INSERT INTO service_providers (
           user_id, full_name, title, category_id, city_id, area_id, phone, whatsapp, email, description, avatar_url, address, is_approved, is_verified, verification_status
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 'pending')`,
-        [userId, name, title || 'مقدم خدمة', category_id, city_id, area_id, phone, whatsapp || phone, email, description, avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80', address]
+        [userId, name, title || 'مقدم خدمة', category_id, city_id, area_id, phone, whatsapp || phone, email, description, avatar_url || null, address]
       );
     }
 

@@ -31,6 +31,33 @@ export default function AddBusinessPage({ cities, categories, onNavigate }) {
   const currentCityObj = cities.find((c) => c.id == formData.city_id);
   const availableAreas = currentCityObj ? currentCityObj.areas || [] : [];
 
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const uploadData = new FormData();
+    uploadData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: uploadData,
+      });
+      const data = await res.json();
+      if (res.ok) {
+        if (accountType === 'company') {
+          setFormData((prev) => ({ ...prev, logo_url: data.url }));
+        } else {
+          setFormData((prev) => ({ ...prev, avatar_url: data.url }));
+        }
+      } else {
+        setError('فشل رفع الصورة');
+      }
+    } catch (err) {
+      setError('خطأ في الاتصال بالسيرفر أثناء رفع الصورة');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
@@ -311,6 +338,19 @@ export default function AddBusinessPage({ cities, categories, onNavigate }) {
                 placeholder="اكتب نبذة عن خبراتك والخدمات التي تقدمها بالتفصيل..."
                 className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:outline-none focus:border-primary-500"
               ></textarea>
+            </div>
+
+            <div className="col-span-2">
+              <label className="block text-xs font-bold text-slate-700 mb-1">الصورة الشخصية / شعار الشركة (اختياري)</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:border-primary-500"
+              />
+              {(formData.avatar_url || formData.logo_url) && (
+                <img src={formData.avatar_url || formData.logo_url} alt="Preview" className="mt-2 h-24 rounded-lg object-cover" />
+              )}
             </div>
 
           </div>
